@@ -10,8 +10,11 @@ WORKDIR /app
 ARG CACHEBUST=2026-07-08-1
 RUN echo "cachebust ${CACHEBUST}"
 
-# Copy root workspace config
-COPY package.json bun.lock ./
+# Copy root workspace config.
+# NOTE: bun.lock is intentionally NOT copied here — the Railway build context
+# drops it (every other file copies fine), which fails BuildKit's checksum.
+# bun install regenerates the lockfile in-image, which is sufficient for deploy.
+COPY package.json ./
 
 # Strip root package.json to only keep workspaces config.
 # The root has frontend deps (design-system, react-dnd, sharp, semantic-release, etc.)
