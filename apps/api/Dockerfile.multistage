@@ -5,6 +5,11 @@ FROM oven/bun:1.2.8 AS deps
 
 WORKDIR /app
 
+# Cache-bust to force Railway BuildKit to recompute layers (avoids a poisoned
+# cache ref that reported "/bun.lock: not found" on an intact context).
+ARG CACHEBUST=2026-07-08-1
+RUN echo "cachebust ${CACHEBUST}"
+
 # Copy root workspace config
 COPY package.json bun.lock ./
 
