@@ -5,6 +5,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 bun.lockb*
+# Never ignore the text lockfile — required by the Docker build (COPY bun.lock)
+!bun.lock
 
 # Testing
 coverage
